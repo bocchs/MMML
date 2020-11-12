@@ -73,7 +73,7 @@ def read_save_test_images():
 
 def read_save_test_labels():
 	test_labels_file = 'data_files/t10k-labels.idx1-ubyte'
-	with open(train_labels_file, 'rb') as f:
+	with open(test_labels_file, 'rb') as f:
 		magic = f.read(4)
 		magic = struct.unpack('>i', magic)[0]
 		num_examples = f.read(4)
@@ -93,14 +93,14 @@ def read_save_test_labels():
 
 
 if __name__ == "__main__":
-	# read_save_train_images()
-	# read_save_train_labels()
-	# read_save_test_images()
-	# read_save_test_labels()
+	read_save_train_images()
+	read_save_train_labels()
+	read_save_test_images()
+	read_save_test_labels()
 
-	train_images = np.load('train_images.npy')
-	train_labels = np.load('train_labels.npy')
-	test_images = np.load('test_images.npy')
-	test_labels = np.load('test_labels.npy')
+	# train_images = np.load('train_images.npy')
+	# train_labels = np.load('train_labels.npy')
+	# test_images = np.load('test_images.npy')
+	# test_labels = np.load('test_labels.npy')
 
 
