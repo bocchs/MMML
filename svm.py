@@ -113,7 +113,6 @@ def get_one_vs_all_data_split(X_train, y_train, X_test, y_test, label):
 def train_svm(X_train, y_train, num_steps=1000):
     num_train, m = X_train.shape
     w = np.random.randn(m)
-
     lr = 1e-4
     batch_size = 128
     lam = 0#1e-5
