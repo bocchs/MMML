@@ -2,6 +2,7 @@ import numpy as np
 import skimage.transform # for downsampling image
 import matplotlib.pyplot as plt
 import time
+import os
 import argparse
 
 def manhattan_dist(u, v):
@@ -56,17 +57,20 @@ def test_accuracy(X_train, y_train, X_test, y_test, K, dist_func):
     N_train = X_train.shape[0]
     N_test = X_test.shape[0]
     pred = np.zeros(N_test)
+    agree_ra = np.zeros(N_test)
     for i in range(N_test):
-        print(i)
+        # print(str(i) + "/" + str(N_test))
         example = X_test[i]
         inds, dist = nearest_neigbhors(example, X_train, K, dist_func)
         label_out, frac = classify_nn(inds, y_train, possible_labels)
         pred[i] = label_out
+        agree_ra[i] = frac
     acc = (pred == y_test).sum() / N_test
-    return acc, frac
+    agree_avg = agree_ra.mean()
+    return acc, agree_avg
 
 
-def pca_proj_matrx(X, num_pc):
+def pca_proj_matrix(X, num_pc):
     # X: N x d (feature vector lies in row)
     # number of principal components to use
     # return project matrix into lower dimension
@@ -138,31 +142,88 @@ if __name__ == "__main__":
 
     # ---------- PCA -----------
     if args.PCA:
-        pca_proj = pca_proj_matrx(X_train, args.num_PC)
+        pca_proj = pca_proj_matrix(X_train, args.num_PC)
         X_train = X_train @ pca_proj
         X_test = X_test @ pca_proj
 
 
-
-    # select smaller random choice of test examples
-    indices = list(range(N_test))
-    num_test = 1
+    # shuffle train set
+    indices = list(range(len(y_train)))
     np.random.seed(12)
     np.random.shuffle(indices)
-    indices = indices[:num_test]
-    X_test = X_test[indices]
-    y_test = y_test[indices]
+    X_train = X_train[indices]
+    y_train = y_train[indices]
+
+
+    # reduce training set size to num_train examples for each label
+    num_train = 1000
+    new_y_train = np.zeros(0)
+    new_X_train = np.zeros((0,X_train.shape[1]))
+    for num in range(10):
+        num_mask = y_train == num
+        new_X_train = np.vstack((new_X_train, X_train[num_mask][:num_train]))
+        new_y_train = np.concatenate((new_y_train, y_train[num_mask][:num_train]))
+    X_train = new_X_train
+    y_train = new_y_train
+
+    # shuffle train set again
+    indices = list(range(len(y_train)))
+    np.random.shuffle(indices)
+    X_train = X_train[indices]
+    y_train = y_train[indices]
+
+
+    # reduce test set size to num_train examples for each label
+    num_test = 100
+    new_y_test = np.zeros(0)
+    new_X_test = np.zeros((0,X_test.shape[1]))
+    for num in range(10):
+        num_mask = y_test == num
+        new_X_test = np.vstack((new_X_test, X_test[num_mask][:num_test]))
+        new_y_test = np.concatenate((new_y_test, y_test[num_mask][:num_test]))
+    X_test = new_X_test
+    y_test = new_y_test
+
+
+    # select smaller random choice of test examples
+    # indices = list(range(N_test))
+    # num_test = 10
+    # np.random.seed(12)
+    # np.random.shuffle(indices)
+    # indices = indices[:num_test]
+    # X_test = X_test[indices]
+    # y_test = y_test[indices]
 
 
     # testing KNN
-    K_ra = [1,5,10,25,50,75,100,250,500,750,1000]
-    y_lim_low, y_lim_high = .75, 1
+    K_ra = [1, 5, 10, 50, 100]
 
-    filename = 'out_files/KNN_Testing_Euc_Dist.txt'
+    out_folder = 'knn_results/'
+    if not os.path.exists(out_folder):
+        os.mkdir(out_folder) # store test output files here
+
+    if args.PCA:
+        filename = out_folder + 'KNN_PCA_Testing_Euc_Dist.txt'
+        plot_acc_title = 'KNN after PCA: Accuracy using Euclidean Distance'
+        plot_acc_file = out_folder + "knn_pca_euc_acc.png"
+        plot_agree_title = 'KNN after PCA: KNN Agreement using Euclidean Distance'
+        plot_agree_file = out_folder + "knn_pca_euc_agree.png"
+    elif args.interp:
+        filename = out_folder + 'KNN_Interpolation_Testing_Euc_Dist.txt'
+        plot_acc_title = 'KNN after Interpolation: Accuracy using Euclidean Distance'
+        plot_acc_file = out_folder + "knn_interp_euc_acc.png"
+        plot_agree_title = 'KNN after Interpolation: KNN Agreement using Euclidean Distance'
+        plot_agree_file = out_folder + "knn_interp_euc_agree.png"
+    else:
+        filename = out_folder + 'KNN_No_Dim_Reduction_Testing_Euc_Dist.txt'
+        plot_acc_title = 'KNN (no dim reduction): Accuracy using Euclidean Distance'
+        plot_acc_file = out_folder + "knn_no_dim_reduc_euc_acc.png"
+        plot_agree_title = 'KNN (no dim reduction): KNN Agreement using Euclidean Distance'
+        plot_agree_file = out_folder + "knn_no_dim_reduc_euc_agree.png"
     with open(filename, 'w') as text_file:
         agreement_ra = np.zeros(len(K_ra))
         accuracy_ra = np.zeros(len(K_ra))
-        text_file.write('KNN using Euclidean Distance N = ' + str(num_test) + '\n\n')
+        text_file.write('KNN using Euclidean Distance' + '\n\n')
         for i, K in enumerate(K_ra):
             start_time = time.time()
             test_acc, frac = test_accuracy(X_train, y_train, X_test, y_test, K, euc_dist)
@@ -172,35 +233,49 @@ if __name__ == "__main__":
             text_file.write("----- K = " + str(K) + " -----\n")
             text_file.write("%s seconds elapsed\n" % (elapsed_time))
             text_file.write("%.3f accuracy\n" % (test_acc))
-            text_file.write("%.3f NN agreement\n\n" % (frac))
+            text_file.write("%.3f average NN agreement\n\n" % (frac))
     fig1 = plt.figure(1)
     plt.plot(K_ra, accuracy_ra, linestyle='--', marker='o', color='b')
-    axes = plt.gca()
-    axes.set_ylim([y_lim_low, y_lim_high])
+    plt.ylim([0.0, 1.05])
     plt.xlabel('K')
     plt.ylabel('Accuracy')
-    plt.title('KNN Accuracy using Euclidean Distance N = ' + str(num_test))
-    fig1.savefig('out_files/knn_acc_euc.png')
+    plt.title(plot_acc_title)
+    fig1.savefig(plot_acc_file)
     plt.close(fig1)
 
     fig2 = plt.figure(2)
     plt.plot(K_ra, agreement_ra, linestyle='--', marker='o', color='b')
-    axes = plt.gca()
-    axes.set_ylim([y_lim_low, y_lim_high])
+    plt.ylim([0.0, 1.05])
     plt.xlabel('K')
     plt.ylabel('Agreement')
-    plt.title('KNN Agreement using Euclidean Distance N = ' + str(num_test))
-    fig2.savefig('out_files/knn_agree_euc.png')
+    plt.title(plot_agree_title)
+    fig2.savefig(plot_agree_file)
     plt.close(fig2)
 
 
 
-
-    filename = 'out_files/KNN_Testing_Man_Dist.txt'
+    if args.PCA:
+        filename = out_folder + 'KNN_PCA_Testing_Man_Dist.txt'
+        plot_acc_title = 'KNN after PCA: Accuracy using Manhattan Distance'
+        plot_acc_file = out_folder + "knn_pca_man_acc.png"
+        plot_agree_title = 'KNN after PCA: KNN Agreement using Manhattan Distance'
+        plot_agree_file = out_folder + "knn_pca_man_agree.png"
+    elif args.interp:
+        filename = out_folder + 'KNN_Interpolation_Testing_Man_Dist.txt'
+        plot_acc_title = 'KNN after Interpolation: Accuracy using Manhattan Distance'
+        plot_acc_file = out_folder + "knn_interp_man_acc.png"
+        plot_agree_title = 'KNN after Interpolation: KNN Agreement using Manhattan Distance'
+        plot_agree_file = out_folder + "knn_interp_man_agree.png"
+    else:
+        filename = out_folder + 'KNN_No_Dim_Reduction_Testing_Man_Dist.txt'
+        plot_acc_title = 'KNN (no dim reduction): Accuracy using Manhattan Distance'
+        plot_acc_file = out_folder + "knn_no_dim_reduc_man_acc.png"
+        plot_agree_title = 'KNN (no dim reduction): KNN Agreement using Manhattan Distance'
+        plot_agree_file = out_folder + "knn_no_dim_reduc_man_agree.png"
     with open(filename, 'w') as text_file:
         agreement_ra = np.zeros(len(K_ra))
         accuracy_ra = np.zeros(len(K_ra))
-        text_file.write('KNN using Manhattan Distance N = ' + str(num_test) + '\n\n')
+        text_file.write('KNN using Manhattan Distance' + '\n\n')
         for i, K in enumerate(K_ra):
             start_time = time.time()
             test_acc, frac = test_accuracy(X_train, y_train, X_test, y_test, K, manhattan_dist)
@@ -210,23 +285,21 @@ if __name__ == "__main__":
             text_file.write("----- K = " + str(K) + " -----\n")
             text_file.write("%s seconds elapsed\n" % (elapsed_time))
             text_file.write("%.3f accuracy\n" % (test_acc))
-            text_file.write("%.3f NN agreement\n\n" % (frac))
+            text_file.write("%.3f average NN agreement\n\n" % (frac))
     fig1 = plt.figure(1)
     plt.plot(K_ra, accuracy_ra, linestyle='--', marker='o', color='b')
-    axes = plt.gca()
-    axes.set_ylim([y_lim_low, y_lim_high])
+    plt.ylim([0.0, 1.05])
     plt.xlabel('K')
     plt.ylabel('Accuracy')
-    plt.title('KNN Accuracy using Manhattan Distance N = ' + str(num_test))
-    fig1.savefig('out_files/knn_acc_man.png')
+    plt.title(plot_acc_title)
+    fig1.savefig(plot_acc_file)
     plt.close(fig1)
 
     fig2 = plt.figure(2)
     plt.plot(K_ra, agreement_ra, linestyle='--', marker='o', color='b')
-    axes = plt.gca()
-    axes.set_ylim([y_lim_low, y_lim_high])
+    plt.ylim([0.0, 1.05])
     plt.xlabel('K')
     plt.ylabel('Agreement')
-    plt.title('KNN Agreement using Manhattan Distance N = ' + str(num_test))
-    fig2.savefig('out_files/knn_agree_man.png')
+    plt.title(plot_agree_title)
+    fig2.savefig(plot_agree_file)
     plt.close(fig2)

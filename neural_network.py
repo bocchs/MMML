@@ -3,6 +3,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
+import os
+import sys
+import argparse
 
 
 class LinearNet(nn.Module):
@@ -30,14 +33,16 @@ class LinearNet(nn.Module):
         return x
 
 
-def train_model(train_loader, num_features, hidden_layers, nonlinearity, lr, display_training_loss=False):
+def train_model(train_loader, num_features, hidden_layers, nonlinearity, lr, display_training_loss=True):
     model = LinearNet(num_features, hidden_layers, 10, nonlinearity, lr)
     model.to(device)
     model.train()
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=lr)
-    epochs = 1
+    epochs = 3
     steps_per_epoch = len(train_loader)
+    lr_str = 'lr {:.0e}'.format(model.lr)
+    print('Training Hidden layer sizes [' + ' '.join(map(str, hidden_layers)) + '], ' + nonlinearity + ' activation, ' + lr_str)
     for epoch in range(epochs):
         epoch_loss = np.zeros(steps_per_epoch)
         if display_training_loss:
@@ -58,7 +63,6 @@ def train_model(train_loader, num_features, hidden_layers, nonlinearity, lr, dis
         if display_training_loss:
             print("Epoch " + str(epoch+1) + " total loss: " + str(epoch_loss.sum()))
             print("Epoch " + str(epoch+1) + " average loss: " + str(epoch_loss.mean()))
-            print()
     return model
 
 
@@ -93,7 +97,15 @@ class MnistDataset(Dataset):
         return self.X[idx], self.y[idx]
 
 
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--display', action='store_true', default=False, help='Flag for printing test results to console rather than to file.')
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == "__main__":
+    args = get_args()
     train_images = np.load('train_images.npy')
     train_labels = np.load('train_labels.npy')
     test_images = np.load('test_images.npy')
@@ -121,50 +133,60 @@ if __name__ == "__main__":
     train_dataset = MnistDataset(X_train_orig, y_train_orig)
     test_dataset = MnistDataset(X_test_orig, y_test_orig)
 
-    train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+    train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
     num_features = X_train_orig.shape[1]
 
+    out_folder = 'neural_net_results/'
+    if not args.display:
+        if not os.path.exists(out_folder):
+            os.mkdir(out_folder) # store test output files here
+        sys.stdout = open(out_folder + 'NeuralNet_Tests.txt', 'w')
+
+
     lr1 = 1e-3
     # test neural network size
-    model = train_model(train_loader, num_features, hidden_layers=[10], nonlinearity="relu", lr=lr1)
+    print('------ Testing Network Size ------')
+    model = train_model(train_loader, num_features, hidden_layers=[30], nonlinearity="relu", lr=lr1)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[10], nonlinearity="sigmoid", lr=lr1)
-    test_model(model, test_loader)
-
-    model = train_model(train_loader, num_features, hidden_layers=[50], nonlinearity="relu", lr=lr1)
-    test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[50], nonlinearity="sigmoid", lr=lr1)
-    test_model(model, test_loader)
-
+    print()
     model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="relu", lr=lr1)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="sigmoid", lr=lr1)
+    print()
+    model = train_model(train_loader, num_features, hidden_layers=[30, 30, 30], nonlinearity="relu", lr=lr1)
     test_model(model, test_loader)
+    print()
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="relu", lr=lr1)
+    test_model(model, test_loader)
+    print('\n\n\n')
 
-    model = train_model(train_loader, num_features, hidden_layers=[10, 20, 10], nonlinearity="relu", lr=lr1)
-    test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[10, 20, 10], nonlinearity="sigmoid", lr=lr1)
-    test_model(model, test_loader)
 
-    model = train_model(train_loader, num_features, hidden_layers=[64, 32, 16], nonlinearity="relu", lr=lr1)
+    # test relu vs sigmoid
+    print('------ Testing ReLU vs sigmoid ------')
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="relu", lr=lr1)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[64, 32, 16], nonlinearity="sigmoid", lr=lr1)
+    print()
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="sigmoid", lr=0.1)
     test_model(model, test_loader)
+    print('\n\n\n')
+
 
     # test learning rate
-    lr2 = 1e-4
-    lr3 = 1e-5
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="relu", lr=lr1)
+    lr1 = 1e-1
+    lr2 = 1e-2
+    lr3 = 1e-3
+    lr4 = 1e-4
+    print('------ Testing different learning rates ------')
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="relu", lr=lr1)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="sigmoid", lr=lr1)
+    print()
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="relu", lr=lr2)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="relu", lr=lr2)
+    print()
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="relu", lr=lr3)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="sigmoid", lr=lr2)
+    print()
+    model = train_model(train_loader, num_features, hidden_layers=[100, 100, 100], nonlinearity="relu", lr=lr4)
     test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="relu", lr=lr3)
-    test_model(model, test_loader)
-    model = train_model(train_loader, num_features, hidden_layers=[100], nonlinearity="sigmoid", lr=lr3)
-    test_model(model, test_loader)
+    print()

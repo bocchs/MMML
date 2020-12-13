@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import argparse
+import sys
+import os
 
 def pred_value(x, w):
     x = np.reshape(x, (-1,1))
@@ -110,13 +112,12 @@ def get_one_vs_all_data_split(X_train, y_train, X_test, y_test, label):
 
 
 
-def train_svm(X_train, y_train, num_steps=1000):
+def train_svm(X_train, y_train, lam=0, num_steps=1000):
     num_train, m = X_train.shape
     w = np.random.randn(m)
     lr = 1e-4
     batch_size = 128
-    lam = 0#1e-5
-    print_every = 500
+    print_every = 100
     for i in range(num_steps):
         # sample random batch
         inds = np.random.choice(num_train, batch_size, replace=False)
@@ -130,19 +131,28 @@ def train_svm(X_train, y_train, num_steps=1000):
 
 
 
-def train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1, class2):
+def train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1, class2, lam=0):
     X_train, y_train, X_test, y_test = get_binary_data_split(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1, class2)
-    w = train_svm(X_train, y_train)
+    w = train_svm(X_train, y_train, lam)
     num_test = len(y_test)
     pred_array = np.zeros(num_test)
     for i in range(num_test):
         pred_array[i] = pred_class(X_test[i], w)
     acc = (pred_array == y_test).sum() / num_test
-    print("Test accuracy " + str(class1) + " vs " + str(class2) + ": " + str(acc))
+    print("Test accuracy " + str(class1) + " vs " + str(class2) + " (lambda = " + str(lam) + "): " + str(acc))
+    print()
 
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--display', action='store_true', default=False, help='Flag for printing test results to console rather than to file.')
+    parser.add_argument('--lam', type=float, default=0, help='L2 regularizaton coefficient')
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == "__main__":
+    args = get_args()
     train_images = np.load('train_images.npy')
     train_labels = np.load('train_labels.npy')
     test_images = np.load('test_images.npy')
@@ -164,19 +174,31 @@ if __name__ == "__main__":
     y_test_orig = test_labels
 
 
-    # selected binary classification
-    train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, 0, 1)
+    lam = args.lam
+    out_folder = 'svm_results/'
+    if not args.display:
+        if not os.path.exists(out_folder):
+            os.mkdir(out_folder) # store test output files here
+        lam_str = '{:.0e}'.format(lam)
+        sys.stdout = open(out_folder + 'SVM_tests_lam_' + lam_str + '.txt', 'w')
 
+    # selected binary classification
+    train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1=0, class2=1, lam=lam)
+    train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1=3, class2=5, lam=lam)
+    # more-similar looking numbers:
+    train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1=2, class2=7, lam=lam)
+    train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1=1, class2=7, lam=lam)
+    train_and_test_binary(X_train_orig, y_train_orig, X_test_orig, y_test_orig, class1=5, class2=6, lam=lam)
 
     # multi-class entire train/test dataset
     w_classifiers = np.zeros((10, X_train_orig.shape[1]))
     for i in range(10):
         X_train, y_train, _, _ = get_one_vs_all_data_split(X_train_orig, y_train_orig, X_test_orig, y_test_orig, i)
-        w_classifiers[i] = train_svm(X_train, y_train, num_steps=int(1e4))
+        w_classifiers[i] = train_svm(X_train, y_train, lam=lam)
     num_test = len(y_test_orig)
     pred_array = np.zeros(num_test)
     for i in range(num_test):
         pred_array[i] = pred_class_one_vs_all(X_test_orig[i], w_classifiers)
     acc = (pred_array == y_test_orig).sum() / num_test
-    print("Test accuracy entire dataset: " + str(acc))
+    print("Test accuracy entire dataset (lambda = " + str(lam) + "): " + str(acc))
 
