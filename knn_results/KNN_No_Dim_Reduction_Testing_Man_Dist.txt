@@ -1,0 +1,27 @@
+KNN using Manhattan Distance
+
+----- K = 1 -----
+146.70232939720154 seconds elapsed
+0.919 accuracy
+1.000 average NN agreement
+
+----- K = 5 -----
+152.8233790397644 seconds elapsed
+0.910 accuracy
+0.930 average NN agreement
+
+----- K = 10 -----
+160.25235867500305 seconds elapsed
+0.912 accuracy
+0.901 average NN agreement
+
+----- K = 50 -----
+226.74275493621826 seconds elapsed
+0.870 accuracy
+0.820 average NN agreement
+
+----- K = 100 -----
+315.7745850086212 seconds elapsed
+0.851 accuracy
+0.763 average NN agreement
+

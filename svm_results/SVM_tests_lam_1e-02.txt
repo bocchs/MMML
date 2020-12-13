@@ -1,0 +1,11 @@
+Test accuracy 0 vs 1 (lambda = 0.01): 0.9995271867612293
+
+Test accuracy 3 vs 5 (lambda = 0.01): 0.9547844374342797
+
+Test accuracy 2 vs 7 (lambda = 0.01): 0.9771844660194174
+
+Test accuracy 1 vs 7 (lambda = 0.01): 0.9893666204345816
+
+Test accuracy 5 vs 6 (lambda = 0.01): 0.9762162162162162
+
+Test accuracy entire dataset (lambda = 0.01): 0.7938

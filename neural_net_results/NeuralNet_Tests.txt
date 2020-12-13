@@ -1,0 +1,309 @@
+------ Testing Network Size ------
+Training Hidden layer sizes [30], relu activation, lr 1e-03
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 30.535917282104492
+Epoch 1 Step 100/469 loss = 1.3043075799942017
+Epoch 1 Step 200/469 loss = 0.8958303928375244
+Epoch 1 Step 300/469 loss = 0.7185989022254944
+Epoch 1 Step 400/469 loss = 0.5850727558135986
+Epoch 1 Step 469/469 loss = 0.6858798861503601
+Epoch 1 total loss: 521.1032502353191
+Epoch 1 average loss: 1.111094350181917
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.7337683439254761
+Epoch 2 Step 100/469 loss = 0.3972189426422119
+Epoch 2 Step 200/469 loss = 0.4557618498802185
+Epoch 2 Step 300/469 loss = 0.4190576374530792
+Epoch 2 Step 400/469 loss = 0.2857891917228699
+Epoch 2 Step 469/469 loss = 0.4468296766281128
+Epoch 2 total loss: 225.7712422311306
+Epoch 2 average loss: 0.4813885761857795
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.281277060508728
+Epoch 3 Step 100/469 loss = 0.3228458762168884
+Epoch 3 Step 200/469 loss = 0.6505123376846313
+Epoch 3 Step 300/469 loss = 0.33405885100364685
+Epoch 3 Step 400/469 loss = 0.2935052812099457
+Epoch 3 Step 469/469 loss = 0.4457590878009796
+Epoch 3 total loss: 176.34726378321648
+Epoch 3 average loss: 0.3760069590260479
+Hidden layer sizes [30], relu activation, lr 1e-03, test accuracy = 0.898099958896637
+
+Training Hidden layer sizes [100], relu activation, lr 1e-03
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 31.054607391357422
+Epoch 1 Step 100/469 loss = 0.8280016183853149
+Epoch 1 Step 200/469 loss = 0.6630663871765137
+Epoch 1 Step 300/469 loss = 0.3900035619735718
+Epoch 1 Step 400/469 loss = 0.25785690546035767
+Epoch 1 Step 469/469 loss = 0.4544108211994171
+Epoch 1 total loss: 393.77289256453514
+Epoch 1 average loss: 0.8396010502442114
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.23798614740371704
+Epoch 2 Step 100/469 loss = 0.312861829996109
+Epoch 2 Step 200/469 loss = 0.35202232003211975
+Epoch 2 Step 300/469 loss = 0.3304906189441681
+Epoch 2 Step 400/469 loss = 0.3658446967601776
+Epoch 2 Step 469/469 loss = 0.28453245759010315
+Epoch 2 total loss: 131.97666753083467
+Epoch 2 average loss: 0.2814001439889865
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.1597289890050888
+Epoch 3 Step 100/469 loss = 0.3360343277454376
+Epoch 3 Step 200/469 loss = 0.29832857847213745
+Epoch 3 Step 300/469 loss = 0.14035247266292572
+Epoch 3 Step 400/469 loss = 0.18976657092571259
+Epoch 3 Step 469/469 loss = 0.29745548963546753
+Epoch 3 total loss: 100.77751898765564
+Epoch 3 average loss: 0.2148774392060888
+Hidden layer sizes [100], relu activation, lr 1e-03, test accuracy = 0.9361000061035156
+
+Training Hidden layer sizes [30 30 30], relu activation, lr 1e-03
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 4.170392036437988
+Epoch 1 Step 100/469 loss = 0.9843369126319885
+Epoch 1 Step 200/469 loss = 0.5314962863922119
+Epoch 1 Step 300/469 loss = 0.44207727909088135
+Epoch 1 Step 400/469 loss = 0.35694262385368347
+Epoch 1 Step 469/469 loss = 0.5739999413490295
+Epoch 1 total loss: 357.48587676882744
+Epoch 1 average loss: 0.7622300144324679
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.5236791968345642
+Epoch 2 Step 100/469 loss = 0.4774566888809204
+Epoch 2 Step 200/469 loss = 0.30309367179870605
+Epoch 2 Step 300/469 loss = 0.26473212242126465
+Epoch 2 Step 400/469 loss = 0.2852596938610077
+Epoch 2 Step 469/469 loss = 0.3181383013725281
+Epoch 2 total loss: 174.2472628802061
+Epoch 2 average loss: 0.3715293451603542
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.4228473901748657
+Epoch 3 Step 100/469 loss = 0.2806669771671295
+Epoch 3 Step 200/469 loss = 0.17131684720516205
+Epoch 3 Step 300/469 loss = 0.5164514183998108
+Epoch 3 Step 400/469 loss = 0.3314985930919647
+Epoch 3 Step 469/469 loss = 0.3687717914581299
+Epoch 3 total loss: 140.06111779808998
+Epoch 3 average loss: 0.29863777782108736
+Hidden layer sizes [30 30 30], relu activation, lr 1e-03, test accuracy = 0.9174999594688416
+
+Training Hidden layer sizes [100 100 100], relu activation, lr 1e-03
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 4.629543304443359
+Epoch 1 Step 100/469 loss = 0.6455308198928833
+Epoch 1 Step 200/469 loss = 0.42589104175567627
+Epoch 1 Step 300/469 loss = 0.5856447219848633
+Epoch 1 Step 400/469 loss = 0.45044663548469543
+Epoch 1 Step 469/469 loss = 0.2729816734790802
+Epoch 1 total loss: 272.182049870491
+Epoch 1 average loss: 0.5803455221119211
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.20163597166538239
+Epoch 2 Step 100/469 loss = 0.2924301326274872
+Epoch 2 Step 200/469 loss = 0.3467727601528168
+Epoch 2 Step 300/469 loss = 0.4139311909675598
+Epoch 2 Step 400/469 loss = 0.2868599593639374
+Epoch 2 Step 469/469 loss = 0.28325340151786804
+Epoch 2 total loss: 129.87940703332424
+Epoch 2 average loss: 0.27692837320538216
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.2318110466003418
+Epoch 3 Step 100/469 loss = 0.2101500928401947
+Epoch 3 Step 200/469 loss = 0.21232260763645172
+Epoch 3 Step 300/469 loss = 0.23853670060634613
+Epoch 3 Step 400/469 loss = 0.24533361196517944
+Epoch 3 Step 469/469 loss = 0.16680406033992767
+Epoch 3 total loss: 103.17541298270226
+Epoch 3 average loss: 0.2199902195793225
+Hidden layer sizes [100 100 100], relu activation, lr 1e-03, test accuracy = 0.9372999668121338
+
+
+
+
+------ Testing ReLU vs sigmoid ------
+Training Hidden layer sizes [100 100 100], relu activation, lr 1e-03
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 4.258815765380859
+Epoch 1 Step 100/469 loss = 0.6531795263290405
+Epoch 1 Step 200/469 loss = 0.4767659306526184
+Epoch 1 Step 300/469 loss = 0.4721565544605255
+Epoch 1 Step 400/469 loss = 0.3252265155315399
+Epoch 1 Step 469/469 loss = 0.4155080020427704
+Epoch 1 total loss: 274.61431999504566
+Epoch 1 average loss: 0.585531599136558
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.4069208800792694
+Epoch 2 Step 100/469 loss = 0.2898208498954773
+Epoch 2 Step 200/469 loss = 0.17049284279346466
+Epoch 2 Step 300/469 loss = 0.30884692072868347
+Epoch 2 Step 400/469 loss = 0.329204797744751
+Epoch 2 Step 469/469 loss = 0.29753512144088745
+Epoch 2 total loss: 133.90474192798138
+Epoch 2 average loss: 0.2855111768187236
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.3167873024940491
+Epoch 3 Step 100/469 loss = 0.13158303499221802
+Epoch 3 Step 200/469 loss = 0.30990415811538696
+Epoch 3 Step 300/469 loss = 0.3264172375202179
+Epoch 3 Step 400/469 loss = 0.3751409649848938
+Epoch 3 Step 469/469 loss = 0.15355832874774933
+Epoch 3 total loss: 107.16562031954527
+Epoch 3 average loss: 0.22849812434871059
+Hidden layer sizes [100 100 100], relu activation, lr 1e-03, test accuracy = 0.9365999698638916
+
+Training Hidden layer sizes [100 100 100], sigmoid activation, lr 1e-01
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 2.351936101913452
+Epoch 1 Step 100/469 loss = 2.301384210586548
+Epoch 1 Step 200/469 loss = 2.268785238265991
+Epoch 1 Step 300/469 loss = 2.2259159088134766
+Epoch 1 Step 400/469 loss = 2.0324299335479736
+Epoch 1 Step 469/469 loss = 1.7848016023635864
+Epoch 1 total loss: 1031.2241044044495
+Epoch 1 average loss: 2.1987720776214275
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 1.7583842277526855
+Epoch 2 Step 100/469 loss = 1.3841462135314941
+Epoch 2 Step 200/469 loss = 1.1774194240570068
+Epoch 2 Step 300/469 loss = 1.081418752670288
+Epoch 2 Step 400/469 loss = 1.1392874717712402
+Epoch 2 Step 469/469 loss = 1.1301201581954956
+Epoch 2 total loss: 586.2128415703773
+Epoch 2 average loss: 1.2499207709389708
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 1.0394841432571411
+Epoch 3 Step 100/469 loss = 1.0179287195205688
+Epoch 3 Step 200/469 loss = 0.9531761407852173
+Epoch 3 Step 300/469 loss = 0.8783807754516602
+Epoch 3 Step 400/469 loss = 0.8148915767669678
+Epoch 3 Step 469/469 loss = 0.7633973956108093
+Epoch 3 total loss: 426.15257036685944
+Epoch 3 average loss: 0.9086408749826427
+Hidden layer sizes [100 100 100], sigmoid activation, lr 1e-01, test accuracy = 0.7973999977111816
+
+
+
+
+------ Testing different learning rates ------
+Training Hidden layer sizes [100 100 100], relu activation, lr 1e-01
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 5.574164390563965
+Epoch 1 Step 100/469 loss = 2.3027966022491455
+Epoch 1 Step 200/469 loss = 2.3089706897735596
+Epoch 1 Step 300/469 loss = 2.2990007400512695
+Epoch 1 Step 400/469 loss = 2.3036859035491943
+Epoch 1 Step 469/469 loss = 2.3032824993133545
+Epoch 1 total loss: 1951602199.881335
+Epoch 1 average loss: 4161198.720429286
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 2.303398370742798
+Epoch 2 Step 100/469 loss = 2.2969512939453125
+Epoch 2 Step 200/469 loss = 2.30199933052063
+Epoch 2 Step 300/469 loss = 2.300532579421997
+Epoch 2 Step 400/469 loss = 2.3002514839172363
+Epoch 2 Step 469/469 loss = 2.3047263622283936
+Epoch 2 total loss: 1079.3686754703522
+Epoch 2 average loss: 2.30142574727154
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 2.300588607788086
+Epoch 3 Step 100/469 loss = 2.3055379390716553
+Epoch 3 Step 200/469 loss = 2.3175652027130127
+Epoch 3 Step 300/469 loss = 2.301846742630005
+Epoch 3 Step 400/469 loss = 2.301661252975464
+Epoch 3 Step 469/469 loss = 2.3090031147003174
+Epoch 3 total loss: 1079.3394088745117
+Epoch 3 average loss: 2.3013633451482125
+Hidden layer sizes [100 100 100], relu activation, lr 1e-01, test accuracy = 0.11349999904632568
+
+Training Hidden layer sizes [100 100 100], relu activation, lr 1e-02
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 6.107396125793457
+Epoch 1 Step 100/469 loss = 0.37844711542129517
+Epoch 1 Step 200/469 loss = 0.2678006589412689
+Epoch 1 Step 300/469 loss = 0.24555936455726624
+Epoch 1 Step 400/469 loss = 0.22142748534679413
+Epoch 1 Step 469/469 loss = 0.1540718972682953
+Epoch 1 total loss: 174.73115172982216
+Epoch 1 average loss: 0.37256109110836283
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.09548793733119965
+Epoch 2 Step 100/469 loss = 0.22632454335689545
+Epoch 2 Step 200/469 loss = 0.14285586774349213
+Epoch 2 Step 300/469 loss = 0.1407337486743927
+Epoch 2 Step 400/469 loss = 0.07782034575939178
+Epoch 2 Step 469/469 loss = 0.08190353214740753
+Epoch 2 total loss: 70.44776550680399
+Epoch 2 average loss: 0.15020845523838805
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.2792230546474457
+Epoch 3 Step 100/469 loss = 0.10252376645803452
+Epoch 3 Step 200/469 loss = 0.19468916952610016
+Epoch 3 Step 300/469 loss = 0.1846429854631424
+Epoch 3 Step 400/469 loss = 0.17407946288585663
+Epoch 3 Step 469/469 loss = 0.09018395096063614
+Epoch 3 total loss: 51.42203566804528
+Epoch 3 average loss: 0.10964186709604538
+Hidden layer sizes [100 100 100], relu activation, lr 1e-02, test accuracy = 0.9625999927520752
+
+Training Hidden layer sizes [100 100 100], relu activation, lr 1e-03
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 6.542791366577148
+Epoch 1 Step 100/469 loss = 0.604990541934967
+Epoch 1 Step 200/469 loss = 0.412421852350235
+Epoch 1 Step 300/469 loss = 0.34883543848991394
+Epoch 1 Step 400/469 loss = 0.3475668430328369
+Epoch 1 Step 469/469 loss = 0.3212646245956421
+Epoch 1 total loss: 290.4895143508911
+Epoch 1 average loss: 0.6193806276138403
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.4610072672367096
+Epoch 2 Step 100/469 loss = 0.27020004391670227
+Epoch 2 Step 200/469 loss = 0.22976230084896088
+Epoch 2 Step 300/469 loss = 0.36591124534606934
+Epoch 2 Step 400/469 loss = 0.2147551029920578
+Epoch 2 Step 469/469 loss = 0.18439821898937225
+Epoch 2 total loss: 132.4807328209281
+Epoch 2 average loss: 0.2824749100659448
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.14219984412193298
+Epoch 3 Step 100/469 loss = 0.1989988535642624
+Epoch 3 Step 200/469 loss = 0.20365041494369507
+Epoch 3 Step 300/469 loss = 0.18355806171894073
+Epoch 3 Step 400/469 loss = 0.20217803120613098
+Epoch 3 Step 469/469 loss = 0.17796848714351654
+Epoch 3 total loss: 106.083501316607
+Epoch 3 average loss: 0.22619083436376758
+Hidden layer sizes [100 100 100], relu activation, lr 1e-03, test accuracy = 0.9370999932289124
+
+Training Hidden layer sizes [100 100 100], relu activation, lr 1e-04
+Epoch 1 started
+Epoch 1 Step 1/469 loss = 5.645888805389404
+Epoch 1 Step 100/469 loss = 2.081038236618042
+Epoch 1 Step 200/469 loss = 1.472338080406189
+Epoch 1 Step 300/469 loss = 1.2256677150726318
+Epoch 1 Step 400/469 loss = 0.8937183618545532
+Epoch 1 Step 469/469 loss = 0.9196329712867737
+Epoch 1 total loss: 751.8539319038391
+Epoch 1 average loss: 1.6031000680252434
+Epoch 2 started
+Epoch 2 Step 1/469 loss = 0.9170641303062439
+Epoch 2 Step 100/469 loss = 0.8296344876289368
+Epoch 2 Step 200/469 loss = 0.6708614826202393
+Epoch 2 Step 300/469 loss = 0.7134624123573303
+Epoch 2 Step 400/469 loss = 0.7185700535774231
+Epoch 2 Step 469/469 loss = 1.0844264030456543
+Epoch 2 total loss: 348.81615778803825
+Epoch 2 average loss: 0.743744472895604
+Epoch 3 started
+Epoch 3 Step 1/469 loss = 0.5563215613365173
+Epoch 3 Step 100/469 loss = 0.7108770608901978
+Epoch 3 Step 200/469 loss = 0.6832164525985718
+Epoch 3 Step 300/469 loss = 0.513911247253418
+Epoch 3 Step 400/469 loss = 0.636021614074707
+Epoch 3 Step 469/469 loss = 0.5573911070823669
+Epoch 3 total loss: 268.7016236782074
+Epoch 3 average loss: 0.5729245707424465
+Hidden layer sizes [100 100 100], relu activation, lr 1e-04, test accuracy = 0.8452000021934509
+

@@ -1,0 +1,27 @@
+KNN using Euclidean Distance
+
+----- K = 1 -----
+108.41011619567871 seconds elapsed
+0.873 accuracy
+1.000 average NN agreement
+
+----- K = 5 -----
+114.58003401756287 seconds elapsed
+0.897 accuracy
+0.891 average NN agreement
+
+----- K = 10 -----
+120.97577667236328 seconds elapsed
+0.894 accuracy
+0.865 average NN agreement
+
+----- K = 50 -----
+182.8282401561737 seconds elapsed
+0.876 accuracy
+0.789 average NN agreement
+
+----- K = 100 -----
+258.55773544311523 seconds elapsed
+0.861 accuracy
+0.740 average NN agreement
+
